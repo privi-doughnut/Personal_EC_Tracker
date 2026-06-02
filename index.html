@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prithivi — Summer 2026 EC Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1923;
+    --navy-mid: #162030;
+    --navy-light: #1e2d40;
+    --teal: #00c2a8;
+    --teal-dim: #00c2a820;
+    --coral: #ff6b5b;
+    --gold: #f5c842;
+    --purple: #a78bfa;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --text: #e8edf2;
+    --text-dim: #7a9bb5;
+    --border: #1e3448;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding-bottom: 80px; }
+
+  .hero { background: linear-gradient(135deg, #0a1520 0%, #162030 50%, #0d1e2e 100%); border-bottom: 1px solid var(--border); padding: 60px 40px 50px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, #00c2a815, transparent 70%); border-radius: 50%; }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 16px; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; margin-bottom: 8px; background: linear-gradient(135deg, #e8edf2, #a0bcd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 15px; color: var(--text-dim); font-weight: 300; margin-bottom: 36px; }
+  .stats-row { display: flex; gap: 32px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--teal); }
+  .stat-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+
+  .tabs { max-width: 900px; margin: 32px auto 0; padding: 0 40px; display: flex; gap: 4px; border-bottom: 1px solid var(--border); }
+  .tab { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 20px; cursor: pointer; color: var(--text-dim); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .filters { max-width: 900px; margin: 28px auto 0; padding: 0 40px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-dim); cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: var(--navy); font-weight: 500; }
+
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px auto 0; max-width: 900px; padding: 0 40px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  .main { max-width: 900px; margin: 32px auto 0; padding: 0 40px; }
+
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-icon { font-size: 18px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+  .section-badge { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 10px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; margin-left: auto; }
+  .badge-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid #00c2a840; }
+  .badge-coral { background: #ff6b5b15; color: var(--coral); border: 1px solid #ff6b5b30; }
+  .badge-gold { background: #f5c84215; color: var(--gold); border: 1px solid #f5c84230; }
+  .badge-purple { background: #a78bfa15; color: var(--purple); border: 1px solid #a78bfa30; }
+  .badge-green { background: #4ade8015; color: var(--green); border: 1px solid #4ade8030; }
+
+  .item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--navy-mid); margin-bottom: 8px; transition: all 0.2s; cursor: pointer; user-select: none; }
+  .item:hover { border-color: #2a4060; background: var(--navy-light); transform: translateX(2px); }
+  .item.done { opacity: 0.45; }
+  .item.done .item-title { text-decoration: line-through; }
+  .item.inprogress { border-color: #f5c84250; background: #f5c84208; }
+
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot-red { background: var(--coral); box-shadow: 0 0 6px #ff6b5b60; }
+  .dot-amber { background: var(--gold); box-shadow: 0 0 6px #f5c84260; }
+  .dot-green { background: var(--green); box-shadow: 0 0 6px #4ade8060; }
+  .dot-purple { background: var(--purple); box-shadow: 0 0 6px #a78bfa60; }
+  .dot-gray { background: #4a6480; }
+
+  .item-body { flex: 1; }
+  .item-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.4; }
+  .item-sub { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .item-sub a { color: var(--teal); text-decoration: none; }
+  .item-sub a:hover { text-decoration: underline; }
+
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.5px; }
+  .tag-summer { background: #00c2a815; color: var(--teal); }
+  .tag-school { background: #60a5fa15; color: var(--blue); }
+  .tag-ongoing { background: #f5c84215; color: var(--gold); }
+  .tag-global { background: #ff6b5b15; color: var(--coral); }
+  .tag-done { background: #4ade8015; color: var(--green); }
+  .tag-mine { background: #a78bfa15; color: var(--purple); }
+
+  .status-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; min-width: 20px; text-align: center; }
+  .delete-btn { font-size: 14px; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s; }
+  .delete-btn:hover { opacity: 1; color: var(--coral); }
+
+  /* ADD PANEL */
+  .add-panel { max-width: 900px; margin: 32px auto 0; padding: 0 40px; }
+  .add-card { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 14px; padding: 32px; margin-bottom: 40px; }
+  .add-card h2 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 8px; }
+  .add-card p { font-size: 13px; color: var(--text-dim); margin-bottom: 28px; }
+  .form-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+  .form-group label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+  .form-group input, .form-group select, .form-group textarea { background: var(--navy); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); }
+  .form-group select option { background: var(--navy); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .tag-checkboxes { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; }
+  .tag-cb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); cursor: pointer; }
+  .tag-cb input { accent-color: var(--teal); }
+  .add-btn { background: var(--teal); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; margin-top: 8px; }
+  .add-btn:hover { opacity: 0.85; }
+
+  .saved-list h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .empty-state { text-align: center; padding: 40px; color: var(--text-dim); font-size: 13px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .main, .filters, .legend, .add-panel, .tabs { padding: 0 16px; }
+    .stats-row { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Summer 2026 — NCSSM Application</div>
+    <div class="hero-name">Prithivi's EC Tracker</div>
+    <div class="hero-sub">Ballantyne Ridge HS → Cardiothoracic Surgery → NCSSM</div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num" id="total-count">0</div><div class="stat-label">Total ECs</div></div>
+      <div class="stat"><div class="stat-num" id="progress-count">0</div><div class="stat-label">In Progress</div></div>
+      <div class="stat"><div class="stat-num" id="done-count">0</div><div class="stat-label">Completed</div></div>
+      <div class="stat"><div class="stat-num" id="pct-count">0%</div><div class="stat-label">Done</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('tracker',this)">📋 Tracker</button>
+  <button class="tab" onclick="switchTab('add',this)">➕ Add EC</button>
+</div>
+
+<!-- TRACKER TAB -->
+<div id="tab-tracker" class="tab-panel active">
+  <div class="filters">
+    <button class="filter-btn active" onclick="filter('all',this)">All</button>
+    <button class="filter-btn" onclick="filter('inprogress',this)">⚡ In Progress</button>
+    <button class="filter-btn" onclick="filter('summer',this)">This Summer</button>
+    <button class="filter-btn" onclick="filter('school',this)">School Year</button>
+    <button class="filter-btn" onclick="filter('ongoing',this)">Ongoing</button>
+    <button class="filter-btn" onclick="filter('global',this)">Global Reach</button>
+    <button class="filter-btn" onclick="filter('done',this)">✅ Completed</button>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span>⬜</span> Not started</div>
+    <div class="legend-item"><span>⚡</span> In progress</div>
+    <div class="legend-item"><span>✅</span> Done</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div>Must do</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Strong add</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Moonshot</div>
+  </div>
+
+  <div class="main" id="main">
+
+    <div class="section" data-section-id="global">
+      <div class="section-header"><span class="section-icon">🌍</span><span class="section-title">Global Recognition — Moonshots</span><span class="section-badge badge-coral">Aim here</span></div>
+      <div class="item" data-tags="summer global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">Breakthrough Junior Challenge 2026</div><div class="item-sub">3-min science video, $250K prize, global recognition. Opens spring 2026.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="summer global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">Intel ISEF — International Science Fair</div><div class="item-sub">World's largest pre-college science competition. Tie to professor outreach.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="ongoing global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">@FakeDoctor — One Viral Video</div><div class="item-sub">Study what medical content goes viral and reverse-engineer it.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="summer global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">OLI — Hit 20,000 Kits + National Press</div><div class="item-sub">Hitting the goal is a press release. Email Teen Vogue, Newsweek Education, health equity journals.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="summer global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">Co-Author a Published Research Paper</div><div class="item-sub">Tie to Duke/UNC Charlotte professor outreach. Your name in a scientific database forever.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="school global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">TEDx Talk</div><div class="item-sub">Local TEDx events accept anyone. Health equity + OLI is exactly their vibe.</div><div class="tags"><span class="tag tag-school">School Year</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="summer global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-purple"></div><div class="item-body"><div class="item-title">OLI National Chapter Expansion</div><div class="item-sub">Start chapters in other cities. "National youth health initiative" changes your narrative.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-global">Global</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="research">
+      <div class="section-header"><span class="section-icon">🔬</span><span class="section-title">Research & Medicine — Tier 1</span><span class="section-badge badge-coral">Stops an AO cold</span></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">Dr. Janies Virology Zoom — UNC Charlotte CIPHER</div><div class="item-sub">✅ Attended June 2, 2026. Active participant. H5N1, phage research, Sayal's mosquito vector tool.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Duke Cardiothoracic — Dr. Joseph Turek</div><div class="item-sub">Email sent. Follow up in 2 weeks if no response.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Duke Cardiothoracic — Dr. Carmelo Milano</div><div class="item-sub">Email sent. Follow up in 2 weeks if no response.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Siemens / Regeneron Science Competition</div><div class="item-sub">Enter with a cardiothoracic or public health project.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Carolina Health Scholars Program</div><div class="item-sub">Research deadlines immediately.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">UNC Chapel Hill Summer Medical Program</div><div class="item-sub">Selective, residential. Check deadlines.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Duke Summer Health Program</div><div class="item-sub">Check deadlines immediately.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">MIT PRIMES-USA</div><div class="item-sub">Applications open in fall. Research timeline now.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Shadow a Cardiologist — Charlotte Private Practice</div><div class="item-sub">Email 3-5 cardiology practices in Charlotte.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Shadow a General Practitioner or Pediatrician</div><div class="item-sub">Easier yes than a cardiothoracic surgeon.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Publish in a High School Research Journal</div><div class="item-sub">Journal of Emerging Investigators, American Junior Academy of Science.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="volunteering">
+      <div class="section-header"><span class="section-icon">🏥</span><span class="section-title">Clinical Volunteering</span><span class="section-badge badge-teal">High impact</span></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Novant Health Ballantyne — Teen Volunteer</div><div class="item-sub">Applied. Target 100+ hours. <a href="https://novanthealth.org/get-connected/volunteer" target="_blank">novanthealth.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Charlotte Community Health Clinic — Volunteer</div><div class="item-sub"><a href="https://charlottecommunityhealth.org" target="_blank">charlottecommunityhealth.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Youth Advisory Council — Atrium or Novant</div><div class="item-sub">Email their community relations departments.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">PATCH Program — Atrium Health + Wake Forest</div><div class="item-sub">Career-focused healthcare pathway for CMS students.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="oli">
+      <div class="section-header"><span class="section-icon">❤️</span><span class="section-title">One Love Initiative</span><span class="section-badge badge-gold">Update pending</span></div>
+      <div class="item" data-tags="ongoing summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Hit 20,000 Kits — Get Numbers Up</div><div class="item-sub">Track everything. Get written letter from Phillip Miller at CAM.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">OLI Healthcare Partnerships</div><div class="item-sub">Atrium, Novant, CVS, Walgreens, pediatric practices, dental offices, YMCA.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">OLI Health Fair</div><div class="item-sub">Coordinate with CAM and Hindu Center of Charlotte.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">OLI Grant Applications</div><div class="item-sub">Foundation For The Carolinas, Robert Wood Johnson Foundation.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">OLI Health Literacy Workshop</div><div class="item-sub">Free workshop for underserved communities.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="content">
+      <div class="section-header"><span class="section-icon">📱</span><span class="section-title">Content, Apps & Tech</span><span class="section-badge badge-purple">Build season</span></div>
+      <div class="item" data-tags="ongoing summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">@FakeDoctor — Launch + Grow</div><div class="item-sub">Medicine/disease education Instagram + TikTok. 1 piece of content daily as backlog.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">@FakeDoctor Companion App</div><div class="item-sub">Quizzes, disease facts, tied to brand.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Condition Tracker App</div><div class="item-sub">Log symptoms over time, spot patterns.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Drug Interaction Checker App</div><div class="item-sub">Simplified for non-pharmacists.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Realtor App (DoorDash for Realtors)</div><div class="item-sub">Get details off phone. Build after healthcare apps started.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">100 Skills in 100 Weeks — Personal Instagram</div><div class="item-sub">Weekly skill, daily content posts to build backlog.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+      <div class="item" data-tags="summer ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Cardiothoracic Surgery Substack / Blog</div><div class="item-sub">Written companion to @FakeDoctor.</div><div class="tags"><span class="tag tag-summer">Summer</span><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Web Design Business — Land a Paying Client</div><div class="item-sub">5 contractors in backlog. Compliment first, ask permission, then send site.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="awards">
+      <div class="section-header"><span class="section-icon">🏆</span><span class="section-title">Awards & Competitions</span><span class="section-badge badge-gold">Register now</span></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Congressional Award — Register June 9</div><div class="item-sub">$25 on payday. Adult Advisor: Phillip Miller at CAM. <a href="https://congressionalaward.org" target="_blank">congressionalaward.org</a></div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+      <div class="item" data-tags="school global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Congressional App Challenge — Deadline Oct 30</div><div class="item-sub"><a href="https://congressionalappchallenge.us" target="_blank">congressionalappchallenge.us</a></div><div class="tags"><span class="tag tag-school">School Year</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">HOSA — Join Next Year</div><div class="item-sub">Future Health Professionals. Compete at regional, state, national.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="school global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Davidson Fellows Scholarship</div><div class="item-sub">Under-18, significant project, $10K-$50K awards.</div><div class="tags"><span class="tag tag-school">School Year</span><span class="tag tag-global">Global</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">PSAT — October (National Merit Pipeline)</div><div class="item-sub">Taken at school in October. SAT prep covers it.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-gray"></div><div class="item-body"><div class="item-title">Science Olympiad</div><div class="item-sub">Check if Ballantyne Ridge HS has a team when school starts.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="school global" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-gray"></div><div class="item-body"><div class="item-title">Charlotte Observer Feature on OLI</div><div class="item-sub">Email community desk when you hit a kit milestone.</div><div class="tags"><span class="tag tag-school">School Year</span><span class="tag tag-global">Global</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="academic">
+      <div class="section-header"><span class="section-icon">📚</span><span class="section-title">Academic</span><span class="section-badge badge-teal">Self-study + school</span></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">AP US Government & Politics — Complete</div><div class="item-sub">✅ Grade: B (89.34%). AP Exam: 5. Strong rec letter from Mr. Michalski secured.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">AP Computer Science Principles — Complete</div><div class="item-sub">✅ Completed freshman year.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">SAT — Registered</div><div class="item-sub">✅ Khan Academy prep ongoing.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">ACT — Registered</div><div class="item-sub">✅ Registered.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">AP Biology — Self Study</div><div class="item-sub">Non-negotiable. Most important self-study AP.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">AP Chemistry — Self Study</div><div class="item-sub">Pre-med foundation.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">AP Statistics — Self Study</div><div class="item-sub">Frame through health lens: clinical trials, disease modeling.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">AP Physics 1 — Self Study</div><div class="item-sub">Professor Dave + Flipping Physics on YouTube.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">AP Psychology — Self Study</div><div class="item-sub">Lightest of the five. Brain + behavior = medicine-adjacent.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">AP Precalculus — At School (next year)</div><div class="item-sub">Get an A.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Biomedical Science — At School (next year)</div><div class="item-sub">Get an A. One of your strongest talking points.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-red"></div><div class="item-body"><div class="item-title">Anatomy — At School (next year)</div><div class="item-sub">Get an A.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">CPCC Dual Enrollment</div><div class="item-sub">1-2 college credit courses this fall.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="certificates">
+      <div class="section-header"><span class="section-icon">📜</span><span class="section-title">Certificate Programs</span><span class="section-badge badge-teal">Do simultaneously</span></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Stop the Bleed — ACS (FREE)</div><div class="item-sub"><a href="https://stopthebleedcoalition.org/stop-the-bleed-course" target="_blank">stopthebleedcoalition.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">CPR / AED — AHA (~$50, bundle w/ First Aid)</div><div class="item-sub"><a href="https://cpr.heart.org/en/cpr-courses-and-kits/find-a-course" target="_blank">cpr.heart.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">First Aid — Bundle with CPR</div><div class="item-sub">Same session as CPR.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Mental Health First Aid (FREE)</div><div class="item-sub">2hrs online + 6.5hr in-person. <a href="https://mentalhealthfirstaid.org" target="_blank">mentalhealthfirstaid.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">FEMA IS-100 Incident Command (FREE, ~3hrs)</div><div class="item-sub"><a href="https://training.fema.gov" target="_blank">training.fema.gov</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Coursera: Johns Hopkins Public Health (FREE)</div><div class="item-sub"><a href="https://coursera.org/specializations/public-health" target="_blank">coursera.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Coursera: Anatomy Specialization (FREE)</div><div class="item-sub"><a href="https://coursera.org/specializations/anatomy" target="_blank">coursera.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Coursera: Medical Neuroscience — Duke (FREE)</div><div class="item-sub"><a href="https://coursera.org" target="_blank">coursera.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Coursera: Johns Hopkins Data Science (FREE)</div><div class="item-sub"><a href="https://coursera.org" target="_blank">coursera.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Harvard CS50 — Intro to Programming (FREE)</div><div class="item-sub"><a href="https://cs50.harvard.edu/x" target="_blank">cs50.harvard.edu/x</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Google Digital Marketing Certificate (FREE)</div><div class="item-sub"><a href="https://grow.google/certificates" target="_blank">grow.google/certificates</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Google Project Management Certificate (FREE)</div><div class="item-sub"><a href="https://grow.google/certificates" target="_blank">grow.google/certificates</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Y Combinator Startup School (FREE)</div><div class="item-sub"><a href="https://startupschool.org" target="_blank">startupschool.org</a></div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-gray"></div><div class="item-body"><div class="item-title">Red Cross First Aid Instructor Certification (later)</div><div class="item-sub">Once certified, become an instructor. Run CPR campaigns at school.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="languages">
+      <div class="section-header"><span class="section-icon">🌐</span><span class="section-title">Languages</span><span class="section-badge badge-green">5 total</span></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">English — Fluent</div><div class="item-sub">✅ Native.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">Tamil — Fluent (conversational)</div><div class="item-sub">✅ Claim it confidently.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">Spanish — Conversational (B1/B2)</div><div class="item-sub">✅ Maintain and improve.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Korean — In Progress</div><div class="item-sub">Passion-driven. Keep going.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Japanese — In Progress</div><div class="item-sub">Same tier as Korean.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+    </div>
+
+    <div class="section" data-section-id="other">
+      <div class="section-header"><span class="section-icon">⚡</span><span class="section-title">Other ECs</span></div>
+      <div class="item" data-tags="ongoing" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Soccer + Basketball</div><div class="item-sub">Keep these up. Don't drop sports for apps.</div><div class="tags"><span class="tag tag-ongoing">Ongoing</span></div></div></div>
+      <div class="item done" data-tags="done" onclick="cycleState(this)"><span class="status-icon">✅</span><div class="dot dot-green"></div><div class="item-body"><div class="item-title">Job — Applied to Häagen-Dazs Waverly Walk</div><div class="item-sub">✅ Application + resume sent. Two weeks notice given to Paris Baguette.</div><div class="tags"><span class="tag tag-done">Done</span></div></div></div>
+      <div class="item" data-tags="school" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-amber"></div><div class="item-body"><div class="item-title">Write Op-Eds for School Newspaper</div><div class="item-sub">Public health, cardiothoracic surgery. Start pitching in the fall.</div><div class="tags"><span class="tag tag-school">School Year</span></div></div></div>
+      <div class="item" data-tags="summer" onclick="cycleState(this)"><span class="status-icon">⬜</span><div class="dot dot-gray"></div><div class="item-body"><div class="item-title">Learn Basic HTML / CSS / JavaScript</div><div class="item-sub">Enough to talk intelligently about your sites.</div><div class="tags"><span class="tag tag-summer">Summer</span></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADD TAB -->
+<div id="tab-add" class="tab-panel">
+  <div class="add-panel">
+    <div class="add-card">
+      <h2>Add a New EC</h2>
+      <p>Fill in the details and pick which section it belongs to — it'll drop right into that section in the tracker.</p>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label>EC Title *</label>
+          <input type="text" id="add-title" placeholder="e.g. AP Environmental Science — Self Study">
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <select id="add-priority">
+            <option value="red">🔴 Must Do</option>
+            <option value="amber" selected>🟡 Strong Add</option>
+            <option value="purple">🟣 Moonshot</option>
+            <option value="gray">⚪ Nice to Have</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Section (where it belongs in the tracker)</label>
+          <select id="add-section">
+            <option value="global">🌍 Global Recognition — Moonshots</option>
+            <option value="research">🔬 Research & Medicine</option>
+            <option value="volunteering">🏥 Clinical Volunteering</option>
+            <option value="oli">❤️ One Love Initiative</option>
+            <option value="content">📱 Content, Apps & Tech</option>
+            <option value="awards">🏆 Awards & Competitions</option>
+            <option value="academic" selected>📚 Academic</option>
+            <option value="certificates">📜 Certificate Programs</option>
+            <option value="languages">🌐 Languages</option>
+            <option value="other">⚡ Other ECs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Category Tags</label>
+          <div class="tag-checkboxes">
+            <label class="tag-cb"><input type="checkbox" value="summer" id="tag-summer"> This Summer</label>
+            <label class="tag-cb"><input type="checkbox" value="school" id="tag-school"> School Year</label>
+            <label class="tag-cb"><input type="checkbox" value="ongoing" id="tag-ongoing"> Ongoing</label>
+            <label class="tag-cb"><input type="checkbox" value="global" id="tag-global"> Global Reach</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Description / Notes</label>
+          <textarea id="add-desc" placeholder="What is this, why does it matter, any links?"></textarea>
+        </div>
+      </div>
+
+      <button class="add-btn" onclick="addCustomEC()">➕ Add to Tracker</button>
+    </div>
+
+    <div class="saved-list">
+      <h3>Your Added ECs</h3>
+      <div id="custom-list-view">
+        <div class="empty-state" id="empty-add">No custom ECs added yet. Add your first one above!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SECTION_MAP = {
+    global: '[data-section-id="global"]',
+    research: '[data-section-id="research"]',
+    volunteering: '[data-section-id="volunteering"]',
+    oli: '[data-section-id="oli"]',
+    content: '[data-section-id="content"]',
+    awards: '[data-section-id="awards"]',
+    academic: '[data-section-id="academic"]',
+    certificates: '[data-section-id="certificates"]',
+    languages: '[data-section-id="languages"]',
+    other: '[data-section-id="other"]'
+  };
+
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  function cycleState(el) {
+    const icon = el.querySelector('.status-icon');
+    if (el.classList.contains('done')) {
+      el.classList.remove('done', 'inprogress');
+      icon.textContent = '⬜';
+    } else if (el.classList.contains('inprogress')) {
+      el.classList.remove('inprogress');
+      el.classList.add('done');
+      icon.textContent = '✅';
+    } else {
+      el.classList.add('inprogress');
+      icon.textContent = '⚡';
+    }
+    updateStats();
+    saveState();
+  }
+
+  function filter(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#main .item').forEach(item => {
+      if (tag === 'all') { item.style.display = 'flex'; return; }
+      if (tag === 'done') { item.style.display = item.classList.contains('done') ? 'flex' : 'none'; return; }
+      if (tag === 'inprogress') { item.style.display = item.classList.contains('inprogress') ? 'flex' : 'none'; return; }
+      item.style.display = (item.dataset.tags || '').includes(tag) ? 'flex' : 'none';
+    });
+  }
+
+  function updateStats() {
+    const all = document.querySelectorAll('#main .item').length;
+    const done = document.querySelectorAll('#main .item.done').length;
+    const prog = document.querySelectorAll('#main .item.inprogress').length;
+    const pct = all > 0 ? Math.round((done / all) * 100) : 0;
+    document.getElementById('total-count').textContent = all;
+    document.getElementById('done-count').textContent = done;
+    document.getElementById('progress-count').textContent = prog;
+    document.getElementById('pct-count').textContent = pct + '%';
+  }
+
+  function saveState() {
+    const states = {};
+    document.querySelectorAll('#main .item').forEach((item, i) => {
+      if (item.classList.contains('done')) states[i] = 'done';
+      else if (item.classList.contains('inprogress')) states[i] = 'inprogress';
+    });
+    try { localStorage.setItem('ec_states', JSON.stringify(states)); } catch(e) {}
+  }
+
+  function loadState() {
+    try {
+      const states = JSON.parse(localStorage.getItem('ec_states') || '{}');
+      document.querySelectorAll('#main .item').forEach((item, i) => {
+        if (states[i] === 'done') { item.classList.add('done'); item.querySelector('.status-icon').textContent = '✅'; }
+        else if (states[i] === 'inprogress') { item.classList.add('inprogress'); item.querySelector('.status-icon').textContent = '⚡'; }
+      });
+    } catch(e) {}
+  }
+
+  function buildItemEl(title, desc, priority, tags, id) {
+    const tagStr = tags.join(' ');
+    const tagHtml = tags.map(t => `<span class="tag tag-${t}">${t.charAt(0).toUpperCase()+t.slice(1)}</span>`).join('');
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.dataset.tags = tagStr;
+    el.dataset.customId = id;
+    el.onclick = function() { cycleState(this); };
+    el.innerHTML = `
+      <span class="status-icon">⬜</span>
+      <div class="dot dot-${priority}"></div>
+      <div class="item-body">
+        <div class="item-title">${title}</div>
+        ${desc ? `<div class="item-sub">${desc}</div>` : ''}
+        <div class="tags">${tagHtml}<span class="tag tag-mine">My Addition</span></div>
+      </div>
+      <button class="delete-btn" onclick="event.stopPropagation();deleteCustom('${id}')">✕</button>
+    `;
+    return el;
+  }
+
+  function addCustomEC() {
+    const title = document.getElementById('add-title').value.trim();
+    if (!title) { alert('Please enter a title.'); return; }
+    const desc = document.getElementById('add-desc').value.trim();
+    const priority = document.getElementById('add-priority').value;
+    const sectionId = document.getElementById('add-section').value;
+    const tags = ['summer','school','ongoing','global'].filter(t => document.getElementById('tag-'+t).checked);
+    const id = 'custom_' + Date.now();
+
+    // Insert into correct section
+    const section = document.querySelector(SECTION_MAP[sectionId]);
+    if (section) {
+      section.appendChild(buildItemEl(title, desc, priority, tags, id));
+    }
+
+    // Save to storage
+    try {
+      const customs = JSON.parse(localStorage.getItem('ec_customs') || '[]');
+      customs.push({ id, title, desc, priority, sectionId, tags });
+      localStorage.setItem('ec_customs', JSON.stringify(customs));
+    } catch(e) {}
+
+    // Clear form
+    document.getElementById('add-title').value = '';
+    document.getElementById('add-desc').value = '';
+    ['summer','school','ongoing','global'].forEach(t => document.getElementById('tag-'+t).checked = false);
+
+    updateStats();
+    renderCustomListView();
+    switchTab('tracker', document.querySelectorAll('.tab')[0]);
+    setTimeout(() => {
+      const section = document.querySelector(SECTION_MAP[sectionId]);
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+
+  function deleteCustom(id) {
+    if (!confirm('Remove this EC?')) return;
+    // Remove from tracker
+    const el = document.querySelector(`[data-custom-id="${id}"]`);
+    if (el) el.remove();
+    // Remove from storage
+    try {
+      const customs = JSON.parse(localStorage.getItem('ec_customs') || '[]').filter(c => c.id !== id);
+      localStorage.setItem('ec_customs', JSON.stringify(customs));
+    } catch(e) {}
+    updateStats();
+    renderCustomListView();
+  }
+
+  function renderCustomListView() {
+    try {
+      const customs = JSON.parse(localStorage.getItem('ec_customs') || '[]');
+      const container = document.getElementById('custom-list-view');
+      const empty = document.getElementById('empty-add');
+      container.querySelectorAll('.cl-item').forEach(e => e.remove());
+      if (customs.length === 0) { if(empty) empty.style.display = 'block'; return; }
+      if(empty) empty.style.display = 'none';
+      customs.forEach(ec => {
+        const div = document.createElement('div');
+        div.className = 'item cl-item';
+        div.style.cursor = 'default';
+        const tagHtml = ec.tags.map(t => `<span class="tag tag-${t}">${t}</span>`).join('');
+        div.innerHTML = `<div class="dot dot-${ec.priority}"></div><div class="item-body"><div class="item-title">${ec.title}</div>${ec.desc?`<div class="item-sub">${ec.desc}</div>`:''}<div class="tags">${tagHtml}</div></div>`;
+        container.appendChild(div);
+      });
+    } catch(e) {}
+  }
+
+  function loadCustomsIntoTracker() {
+    try {
+      const customs = JSON.parse(localStorage.getItem('ec_customs') || '[]');
+      customs.forEach(ec => {
+        const section = document.querySelector(SECTION_MAP[ec.sectionId] || SECTION_MAP.other);
+        if (section) section.appendChild(buildItemEl(ec.title, ec.desc, ec.priority, ec.tags, ec.id));
+      });
+    } catch(e) {}
+  }
+
+  loadState();
+  loadCustomsIntoTracker();
+  renderCustomListView();
+  updateStats();
+</script>
+</body>
+</html>
