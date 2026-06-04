@@ -7,46 +7,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0f1923;
-    --navy-mid: #162030;
-    --navy-light: #1e2d40;
-    --teal: #00c2a8;
-    --teal-dim: #00c2a820;
-    --coral: #ff6b5b;
-    --gold: #f5c842;
-    --purple: #a78bfa;
-    --green: #4ade80;
-    --blue: #60a5fa;
-    --text: #e8edf2;
-    --text-dim: #7a9bb5;
-    --border: #1e3448;
+    --navy: #0a0a0a;
+    --navy-mid: #111111;
+    --navy-light: #1a1a1a;
+    --teal: #1a5c38;
+    --teal-dim: #1a5c3820;
+    --coral: #2d8653;
+    --gold: #3aad6a;
+    --purple: #4dc97d;
+    --green: #134a2c;
+    --blue: #3aad6a;
+    --text: #f0fdf4;
+    --text-dim: #6b7280;
+    --border: #1f2937;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding-bottom: 80px; }
 
-  .hero { background: linear-gradient(135deg, #0a1520 0%, #162030 50%, #0d1e2e 100%); border-bottom: 1px solid var(--border); padding: 60px 40px 50px; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, #00c2a815, transparent 70%); border-radius: 50%; }
+  .hero { background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #050505 100%); border-bottom: 1px solid var(--border); padding: 60px 40px 50px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, #1a5c3815, transparent 70%); border-radius: 50%; }
   .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
-  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 16px; }
-  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; margin-bottom: 8px; background: linear-gradient(135deg, #e8edf2, #a0bcd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; color: #1a5c38; text-transform: uppercase; margin-bottom: 16px; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; margin-bottom: 8px; background: linear-gradient(135deg, #f0fdf4, #4dc97d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .hero-sub { font-size: 15px; color: var(--text-dim); font-weight: 300; margin-bottom: 36px; }
   .stats-row { display: flex; gap: 32px; flex-wrap: wrap; }
   .stat { display: flex; flex-direction: column; gap: 4px; }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--teal); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #1a5c38; }
   .stat-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
 
   .tabs { max-width: 900px; margin: 32px auto 0; padding: 0 40px; display: flex; gap: 4px; border-bottom: 1px solid var(--border); }
   .tab { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 20px; cursor: pointer; color: var(--text-dim); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; }
   .tab:hover { color: var(--text); }
-  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab.active { color: #1a5c38; border-bottom-color: #1a5c38; }
 
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
   .filters { max-width: 900px; margin: 28px auto 0; padding: 0 40px; display: flex; gap: 8px; flex-wrap: wrap; }
   .filter-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-dim); cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
-  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
-  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: var(--navy); font-weight: 500; }
+  .filter-btn:hover { border-color: #1a5c38; color: #1a5c38; }
+  .filter-btn.active { background: #1a5c38; border-color: #1a5c38; color: #0a0a0a; font-weight: 500; }
 
   .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px auto 0; max-width: 900px; padding: 0 40px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -59,43 +59,43 @@
   .section-icon { font-size: 18px; }
   .section-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
   .section-badge { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 10px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; margin-left: auto; }
-  .badge-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid #00c2a840; }
-  .badge-coral { background: #ff6b5b15; color: var(--coral); border: 1px solid #ff6b5b30; }
-  .badge-gold { background: #f5c84215; color: var(--gold); border: 1px solid #f5c84230; }
-  .badge-purple { background: #a78bfa15; color: var(--purple); border: 1px solid #a78bfa30; }
-  .badge-green { background: #4ade8015; color: var(--green); border: 1px solid #4ade8030; }
+  .badge-teal { background: var(--teal-dim); color: #1a5c38; border: 1px solid #1a5c3840; }
+  .badge-coral { background: #1a5c3815; color: #2d8653; border: 1px solid #1a5c3830; }
+  .badge-gold { background: #3aad6a15; color: #3aad6a; border: 1px solid #3aad6a30; }
+  .badge-purple { background: #4dc97d15; color: #4dc97d; border: 1px solid #4dc97d30; }
+  .badge-green { background: #134a2c15; color: #134a2c; border: 1px solid #134a2c30; }
 
   .item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--navy-mid); margin-bottom: 8px; transition: all 0.2s; cursor: pointer; user-select: none; }
-  .item:hover { border-color: #2a4060; background: var(--navy-light); transform: translateX(2px); }
+  .item:hover { border-color: #1a2e1a; background: var(--navy-light); transform: translateX(2px); }
   .item.done { opacity: 0.45; }
   .item.done .item-title { text-decoration: line-through; }
-  .item.inprogress { border-color: #f5c84250; background: #f5c84208; }
+  .item.inprogress { border-color: #1a5c3850; background: #1a5c3808; }
 
   .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-  .dot-red { background: var(--coral); box-shadow: 0 0 6px #ff6b5b60; }
-  .dot-amber { background: var(--gold); box-shadow: 0 0 6px #f5c84260; }
-  .dot-green { background: var(--green); box-shadow: 0 0 6px #4ade8060; }
-  .dot-purple { background: var(--purple); box-shadow: 0 0 6px #a78bfa60; }
+  .dot-red { background: var(--coral); box-shadow: 0 0 6px #1a5c3860; }
+  .dot-amber { background: var(--gold); box-shadow: 0 0 6px #3aad6a60; }
+  .dot-green { background: var(--green); box-shadow: 0 0 6px #134a2c60; }
+  .dot-purple { background: var(--purple); box-shadow: 0 0 6px #4dc97d60; }
   .dot-gray { background: #4a6480; }
 
   .item-body { flex: 1; }
   .item-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.4; }
   .item-sub { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-  .item-sub a { color: var(--teal); text-decoration: none; }
+  .item-sub a { color: #1a5c38; text-decoration: none; }
   .item-sub a:hover { text-decoration: underline; }
 
   .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
   .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.5px; }
-  .tag-summer { background: #00c2a815; color: var(--teal); }
-  .tag-school { background: #60a5fa15; color: var(--blue); }
-  .tag-ongoing { background: #f5c84215; color: var(--gold); }
-  .tag-global { background: #ff6b5b15; color: var(--coral); }
-  .tag-done { background: #4ade8015; color: var(--green); }
-  .tag-mine { background: #a78bfa15; color: var(--purple); }
+  .tag-summer { background: #1a5c3815; color: #1a5c38; }
+  .tag-school { background: #3aad6a15; color: #3aad6a; }
+  .tag-ongoing { background: #3aad6a15; color: #3aad6a; }
+  .tag-global { background: #1a5c3815; color: #2d8653; }
+  .tag-done { background: #134a2c15; color: #134a2c; }
+  .tag-mine { background: #4dc97d15; color: #4dc97d; }
 
   .status-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; min-width: 20px; text-align: center; }
   .delete-btn { font-size: 14px; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s; }
-  .delete-btn:hover { opacity: 1; color: var(--coral); }
+  .delete-btn:hover { opacity: 1; color: #2d8653; }
 
   /* ADD PANEL */
   .add-panel { max-width: 900px; margin: 32px auto 0; padding: 0 40px; }
@@ -106,13 +106,13 @@
   .form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
   .form-group label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
   .form-group input, .form-group select, .form-group textarea { background: var(--navy); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #1a5c38; }
   .form-group select option { background: var(--navy); }
   .form-group textarea { resize: vertical; min-height: 80px; }
   .tag-checkboxes { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; }
   .tag-cb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); cursor: pointer; }
-  .tag-cb input { accent-color: var(--teal); }
-  .add-btn { background: var(--teal); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; margin-top: 8px; }
+  .tag-cb input { accent-color: #1a5c38; }
+  .add-btn { background: #1a5c38; color: #0a0a0a; border: none; padding: 12px 28px; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; margin-top: 8px; }
   .add-btn:hover { opacity: 0.85; }
 
   .saved-list h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -144,6 +144,7 @@
 <div class="tabs">
   <button class="tab active" onclick="switchTab('tracker',this)">📋 Tracker</button>
   <button class="tab" onclick="switchTab('add',this)">➕ Add EC</button>
+  <button class="tab" onclick="switchTab('schedule',this)">🗓 Schedule</button>
 </div>
 
 <!-- TRACKER TAB -->
@@ -357,6 +358,221 @@
     </div>
   </div>
 </div>
+
+<!-- SCHEDULE TAB -->
+<div id="tab-schedule" class="tab-panel">
+<style>
+.sch-wrap{padding:1rem 0;max-width:700px}
+.day-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:0}
+.dt{font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;padding:8px 14px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;background:none;border-top:none;border-left:none;border-right:none;transition:all 0.15s}
+.dt:hover{color:var(--color-text-primary)}
+.dt.active{color:var(--color-text-info);border-bottom-color:var(--color-text-info)}
+.day-panel{display:none}.day-panel.active{display:block}
+.sleg{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.25rem}
+.sli{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono)}
+.slc{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.sblock{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-bottom:6px;background:var(--color-background-primary)}
+.stime{font-size:11px;font-family:var(--font-mono);color:var(--color-text-secondary);min-width:90px;padding-top:2px;flex-shrink:0}
+.spill{width:10px;height:10px;border-radius:3px;flex-shrink:0;margin-top:4px}
+.sbl{flex:1}
+.sbt{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.4}
+.sbs{font-size:12px;color:var(--color-text-secondary);margin-top:2px;line-height:1.4}
+.snote{font-size:12px;color:var(--color-text-secondary);padding:10px 14px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);margin-bottom:12px;font-style:italic}
+.ssh{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:16px 0 8px;padding-bottom:4px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.c-ap{background:#134a2c}.c-lang{background:#0f3d28}.c-content{background:#2d8653}
+.c-proj{background:#1a5c38}.c-cert{background:#3aad6a}.c-oli{background:#4dc97d}
+.c-sport{background:#0d3d20}.c-meeting{background:#0a3020}.c-sat{background:#051a0e}
+.c-free{background:#374151}
+</style>
+<div class="sch-wrap" style="padding:1.5rem 40px 0">
+<h2 class="sr-only">Prithivi summer 2026 daily schedule</h2>
+<div class="sleg">
+  <div class="sli"><div class="slc c-ap"></div>AP study</div>
+  <div class="sli"><div class="slc c-sat"></div>SAT/ACT</div>
+  <div class="sli"><div class="slc c-lang"></div>Languages</div>
+  <div class="sli"><div class="slc c-content"></div>Content</div>
+  <div class="sli"><div class="slc c-proj"></div>Apps/Tech</div>
+  <div class="sli"><div class="slc c-cert"></div>Certs</div>
+  <div class="sli"><div class="slc c-oli"></div>OLI</div>
+  <div class="sli"><div class="slc c-meeting"></div>Meetings</div>
+  <div class="sli"><div class="slc c-sport"></div>Sports</div>
+  <div class="sli"><div class="slc c-free"></div>Break</div>
+</div>
+<div class="day-tabs">
+  <button class="dt active" onclick="showDay('mon',this)">Mon</button>
+  <button class="dt" onclick="showDay('tue',this)">Tue</button>
+  <button class="dt" onclick="showDay('wed',this)">Wed</button>
+  <button class="dt" onclick="showDay('thu',this)">Thu</button>
+  <button class="dt" onclick="showDay('fri',this)">Fri</button>
+  <button class="dt" onclick="showDay('sat',this)">Sat</button>
+  <button class="dt" onclick="showDay('sun',this)">Sun</button>
+</div>
+
+<div id="day-mon" class="day-panel active">
+  <div class="snote">Monday — Dr. Janies CIPHER Zoom 11AM-12PM. Soccer conditioning morning (if scheduled). Heavy AP + language day.</div>
+  <div class="ssh">Early morning</div>
+  <div class="sblock"><div class="stime">4:30 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Biology</div><div class="sbs">90 min deep focus. Khan Academy + Princeton Review. No phone.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Soccer conditioning (if scheduled)</div><div class="sbs">Skip next block if conditioning runs past 9AM.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Chemistry (if no conditioning)</div><div class="sbs">90 min. Start from Unit 1 — stoichiometry, atomic theory, bonding.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">SAT Prep — Math section</div><div class="sbs">30 min. Khan Academy official practice questions only.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — Duolingo + HelloTalk conversation</div><div class="sbs">30 min. Maintenance mode — you're already conversational.</div></div></div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — LingoDeer + Anki</div><div class="sbs">30 min. One lesson + flashcard review.</div></div></div>
+  <div class="sblock"><div class="stime">9:15 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Coursera — Johns Hopkins Public Health</div><div class="sbs">30 min. One module per session.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">RoadMap App — Build session w/ Claude</div><div class="sbs">75 min. Open a separate Claude chat for this.</div></div></div>
+  <div class="ssh">Dr. Janies meeting</div>
+  <div class="sblock"><div class="stime">10:45 AM</div><div class="spill c-meeting"></div><div class="sbl"><div class="sbt">Prep for Dr. Janies Zoom</div><div class="sbs">15 min. Review last week's notes. Prepare one question.</div></div></div>
+  <div class="sblock"><div class="stime">11:00 AM</div><div class="spill c-meeting"></div><div class="sbl"><div class="sbt">Dr. Janies CIPHER Lab Zoom</div><div class="sbs">Active participant. Take notes. Ask your prepared question.</div></div></div>
+  <div class="sblock"><div class="stime">12:00 PM</div><div class="spill c-meeting"></div><div class="sbl"><div class="sbt">Send Dr. Janies thank you + follow-up email</div><div class="sbs">15 min. Reference something specific from today's meeting.</div></div></div>
+  <div class="ssh">Afternoon</div>
+  <div class="sblock"><div class="stime">12:15 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Lunch break</div><div class="sbs">45 min. Eat, decompress, go outside.</div></div></div>
+  <div class="sblock"><div class="stime">1:00 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — Film + edit content</div><div class="sbs">60 min. One Reel or TikTok. Aim for 2 pieces posted today.</div></div></div>
+  <div class="sblock"><div class="stime">2:00 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">100 Skills Challenge — content</div><div class="sbs">30 min. Film, photograph, or document today's skill.</div></div></div>
+  <div class="sblock"><div class="stime">2:30 PM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Partnership outreach emails</div><div class="sbs">45 min. Draft + send to Atrium, CVS, pediatric practices.</div></div></div>
+  <div class="sblock"><div class="stime">3:15 PM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Web design business — Contractor outreach</div><div class="sbs">30 min. Compliment first, ask permission, then send site.</div></div></div>
+  <div class="sblock"><div class="stime">3:45 PM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Harvard CS50 — Programming lecture</div><div class="sbs">45 min. One lecture or problem set section.</div></div></div>
+  <div class="sblock"><div class="stime">4:30 PM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — LingoDeer</div><div class="sbs">20 min. One lesson. Consistency over volume.</div></div></div>
+  <div class="sblock"><div class="stime">4:50 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">End of structured day</div><div class="sbs">Friends, dinner, whatever. You earned it.</div></div></div>
+</div>
+
+<div id="day-tue" class="day-panel">
+  <div class="snote">Tuesday — Basketball practice 6PM-8PM. AP Chemistry + Statistics day. App building focus afternoon.</div>
+  <div class="ssh">Early morning</div>
+  <div class="sblock"><div class="stime">4:30 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Chemistry</div><div class="sbs">90 min deep focus. Problem sets — show your work even self-studying.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Soccer conditioning (if scheduled)</div><div class="sbs">Go. Resume at 9AM block.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Statistics (if no conditioning)</div><div class="sbs">90 min. Frame through health data — clinical trials, disease spread.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">ACT Prep — Science section</div><div class="sbs">30 min. Your strongest ACT advantage. Practice passages.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — Reading + Writing</div><div class="sbs">30 min. Read a Spanish article. Write 5 sentences about it.</div></div></div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — TTMIK podcast + vocab</div><div class="sbs">30 min. Talk To Me In Korean episode + new vocab list.</div></div></div>
+  <div class="sblock"><div class="stime">9:15 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Coursera — Anatomy Specialization</div><div class="sbs">30 min. Get ahead of your school anatomy class.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">@FakeDoctor Companion App — Build session</div><div class="sbs">75 min. Quizzes, disease facts, UI polish.</div></div></div>
+  <div class="ssh">Afternoon</div>
+  <div class="sblock"><div class="stime">11:00 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Lunch break</div><div class="sbs">45 min.</div></div></div>
+  <div class="sblock"><div class="stime">11:45 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — Research + script next video</div><div class="sbs">60 min. Pick a disease or concept. Research it. Write the script.</div></div></div>
+  <div class="sblock"><div class="stime">12:45 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">100 Skills Challenge — content</div><div class="sbs">30 min.</div></div></div>
+  <div class="sblock"><div class="stime">1:15 PM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Team check-in</div><div class="sbs">45 min. Saket (Ops), Rishi (Marketing), Jadon (Finance). Push kit numbers.</div></div></div>
+  <div class="sblock"><div class="stime">2:00 PM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Google Project Management Certificate</div><div class="sbs">45 min. Directly useful for running OLI at scale.</div></div></div>
+  <div class="sblock"><div class="stime">2:45 PM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">FEMA IS-100 Incident Command</div><div class="sbs">45 min. Work through until complete. Almost nobody your age has this.</div></div></div>
+  <div class="sblock"><div class="stime">3:30 PM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — Cure Dolly grammar</div><div class="sbs">20 min. One grammar video. Write 3 example sentences.</div></div></div>
+  <div class="sblock"><div class="stime">3:50 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Rest before basketball</div><div class="sbs">Eat, hydrate, rest.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 PM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Basketball practice</div><div class="sbs">6PM-8PM.</div></div></div>
+</div>
+
+<div id="day-wed" class="day-panel">
+  <div class="snote">Wednesday — Mid-week push. AP Physics + AP Psychology. Substack writing + OLI health fair planning.</div>
+  <div class="ssh">Early morning</div>
+  <div class="sblock"><div class="stime">4:30 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Physics 1</div><div class="sbs">90 min. Watch Professor Dave or Flipping Physics first, then practice problems.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Soccer conditioning (if scheduled)</div><div class="sbs">Go. Resume at 9AM.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Psychology (if no conditioning)</div><div class="sbs">90 min. Pair with real medicine examples to make it stick.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">SAT Prep — Reading + Writing section</div><div class="sbs">30 min. Evidence-based reading. You're a strong writer — this should score well.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — Dreaming Spanish immersion</div><div class="sbs">30 min. Comprehensible input videos. Passive but effective.</div></div></div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — Anki + writing practice</div><div class="sbs">30 min. Review + write out 10 vocab words by hand.</div></div></div>
+  <div class="sblock"><div class="stime">9:15 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Coursera — Johns Hopkins Data Science</div><div class="sbs">30 min. Connects to research literacy and AP Stats.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Condition Tracker App — Build session</div><div class="sbs">75 min. Log symptoms, spot patterns. Real clinical utility.</div></div></div>
+  <div class="ssh">Afternoon</div>
+  <div class="sblock"><div class="stime">11:00 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Lunch break</div><div class="sbs">45 min.</div></div></div>
+  <div class="sblock"><div class="stime">11:45 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">Substack — Cardiothoracic surgery post</div><div class="sbs">60 min. One post per week. Research a recent cardiac surgery development and explain it.</div></div></div>
+  <div class="sblock"><div class="stime">12:45 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">100 Skills Challenge — content</div><div class="sbs">30 min.</div></div></div>
+  <div class="sblock"><div class="stime">1:15 PM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Health fair planning</div><div class="sbs">60 min. Coordinate with CAM and Hindu Center. Book a date.</div></div></div>
+  <div class="sblock"><div class="stime">2:15 PM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Google Digital Marketing Certificate</div><div class="sbs">45 min. Useful for OLI outreach and web business.</div></div></div>
+  <div class="sblock"><div class="stime">3:00 PM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Web design business — Build + send sites</div><div class="sbs">45 min. Work on backlog. Send one completed site to a prospect.</div></div></div>
+  <div class="sblock"><div class="stime">3:45 PM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — Renshuu + listening</div><div class="sbs">20 min. Renshuu practice + 10 min Japanese YouTube.</div></div></div>
+  <div class="sblock"><div class="stime">4:05 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">End of structured day</div><div class="sbs">Go outside. Touch grass.</div></div></div>
+</div>
+
+<div id="day-thu" class="day-panel">
+  <div class="snote">Thursday — Basketball practice 6PM-8PM. AP Biology deep dive + Drug Interaction Checker app. Professor follow-up emails.</div>
+  <div class="ssh">Early morning</div>
+  <div class="sblock"><div class="stime">4:30 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Biology — deep dive</div><div class="sbs">90 min. Go deeper on the week's hardest topic.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Soccer conditioning (if scheduled)</div><div class="sbs">Go. Resume at 9AM.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Statistics — FRQ practice (if no conditioning)</div><div class="sbs">90 min. Thursday doubles on Stats. FRQ with health data context.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">ACT Prep — English + Math</div><div class="sbs">30 min. English section Thursdays.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — HelloTalk speaking practice</div><div class="sbs">30 min. Speak for 30 min with a language partner. Your Spanish is good — use it.</div></div></div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — full lesson + review</div><div class="sbs">30 min. LingoDeer new lesson + review last three Anki decks.</div></div></div>
+  <div class="sblock"><div class="stime">9:15 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Coursera — Medical Neuroscience (Duke)</div><div class="sbs">30 min. Brain science — connects to medicine and AP Psychology.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Drug Interaction Checker App — Build session</div><div class="sbs">75 min. Simplified for non-pharmacists.</div></div></div>
+  <div class="ssh">Afternoon</div>
+  <div class="sblock"><div class="stime">11:00 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Lunch break</div><div class="sbs">45 min.</div></div></div>
+  <div class="sblock"><div class="stime">11:45 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — Film + post</div><div class="sbs">60 min. Thursday is high-engagement day. Post at least one piece.</div></div></div>
+  <div class="sblock"><div class="stime">12:45 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">100 Skills Challenge — content</div><div class="sbs">30 min.</div></div></div>
+  <div class="sblock"><div class="stime">1:15 PM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Grant application writing</div><div class="sbs">60 min. Foundation For The Carolinas, Robert Wood Johnson. Draft applications.</div></div></div>
+  <div class="sblock"><div class="stime">2:15 PM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Harvard CS50 — Problem set</div><div class="sbs">45 min. Work on coding assignments. You need to own this code.</div></div></div>
+  <div class="sblock"><div class="stime">3:00 PM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">SAT — Full timed practice section</div><div class="sbs">35 min. Grade it. Review every wrong answer.</div></div></div>
+  <div class="sblock"><div class="stime">3:35 PM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — grammar + sentences</div><div class="sbs">20 min. Write 5 sentences using this week's grammar point.</div></div></div>
+  <div class="sblock"><div class="stime">3:55 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Rest before basketball</div><div class="sbs">Eat, hydrate, rest.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 PM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Basketball practice</div><div class="sbs">6PM-8PM.</div></div></div>
+</div>
+
+<div id="day-fri" class="day-panel">
+  <div class="snote">Friday — End of week push. AP Chemistry deep dive + RoadMap app. OLI weekly update. Week review + plan next week.</div>
+  <div class="ssh">Early morning</div>
+  <div class="sblock"><div class="stime">4:30 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Chemistry — deep dive</div><div class="sbs">90 min. Second chem session. Practice problems, not just reading.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Soccer conditioning (if scheduled)</div><div class="sbs">Go. Resume at 9AM.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Physics 1 — second session (if no conditioning)</div><div class="sbs">90 min. Conceptual + calculations.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">SAT Prep — Math focus</div><div class="sbs">30 min. Heart of Algebra highest-yield Friday topic.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — vocab + grammar review</div><div class="sbs">30 min. Review the week's new vocab. Write a short paragraph using it.</div></div></div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — weekly review session</div><div class="sbs">30 min. Consolidate everything learned this week.</div></div></div>
+  <div class="sblock"><div class="stime">9:15 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Y Combinator Startup School</div><div class="sbs">30 min. One module. Applicable to web business and app projects.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">RoadMap App — Build session</div><div class="sbs">75 min. End of week build sprint. Connect Part 1 and Part 2.</div></div></div>
+  <div class="ssh">Afternoon</div>
+  <div class="sblock"><div class="stime">11:00 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Lunch break</div><div class="sbs">45 min.</div></div></div>
+  <div class="sblock"><div class="stime">11:45 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — Batch film weekend content</div><div class="sbs">75 min. Film 3-4 pieces so you have content ready for the weekend.</div></div></div>
+  <div class="sblock"><div class="stime">1:00 PM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">100 Skills — batch content for weekend</div><div class="sbs">30 min. Film Saturday and Sunday skills content today.</div></div></div>
+  <div class="sblock"><div class="stime">1:30 PM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Weekly numbers update</div><div class="sbs">45 min. Count kits, update Stripe, check in with all three team leads.</div></div></div>
+  <div class="sblock"><div class="stime">2:15 PM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Realtor App — Build session</div><div class="sbs">45 min. Get the details off your phone and start building.</div></div></div>
+  <div class="sblock"><div class="stime">3:00 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Weekly review — 15 min</div><div class="sbs">What finished? What fell behind? Plan Monday. Update EC tracker on GitHub.</div></div></div>
+  <div class="sblock"><div class="stime">3:15 PM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — weekly review</div><div class="sbs">20 min. Consolidate the week's Japanese before weekend.</div></div></div>
+  <div class="sblock"><div class="stime">3:35 PM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">End of structured week</div><div class="sbs">Weekend is lighter. You earned the evenings.</div></div></div>
+</div>
+
+<div id="day-sat" class="day-panel">
+  <div class="snote">Saturday — Basketball tournaments may run all day. Front-loaded schedule. If tournament, skip afternoon blocks. Core academics + OLI in the morning no matter what.</div>
+  <div class="ssh">Early morning — non-negotiable</div>
+  <div class="sblock"><div class="stime">5:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Biology — review + practice MCQs</div><div class="sbs">60 min. Review the week's AP Bio content. Do 20 practice MCQs.</div></div></div>
+  <div class="sblock"><div class="stime">6:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Psychology — full unit</div><div class="sbs">60 min. Knock out a full unit on Saturdays. Lightest AP.</div></div></div>
+  <div class="sblock"><div class="stime">7:00 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">SAT — Full practice section timed</div><div class="sbs">35 min. Grade it immediately. Log your score trend.</div></div></div>
+  <div class="sblock"><div class="stime">7:35 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish + Korean + Japanese — daily maintenance</div><div class="sbs">30 min total. 10 min each. Duolingo streaks + Anki. Don't skip even on tournament days.</div></div></div>
+  <div class="sblock"><div class="stime">8:05 AM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Healthcare partnership emails</div><div class="sbs">45 min. Send at least 3 emails to Atrium, Novant, CVS, dental offices.</div></div></div>
+  <div class="sblock"><div class="stime">8:50 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Coursera — catch-up module</div><div class="sbs">30 min. Whichever course fell behind this week.</div></div></div>
+  <div class="ssh">Mid-morning — if no tournament</div>
+  <div class="sblock"><div class="stime">9:20 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">App building — free choice</div><div class="sbs">75 min. Pick whichever app needs the most attention.</div></div></div>
+  <div class="sblock"><div class="stime">10:35 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — post scheduled content</div><div class="sbs">30 min. Post pieces filmed Friday. Engage with comments.</div></div></div>
+  <div class="sblock"><div class="stime">11:05 AM</div><div class="spill c-sport"></div><div class="sbl"><div class="sbt">Basketball tournament (if scheduled)</div><div class="sbs">Rest of day. Go win.</div></div></div>
+  <div class="sblock"><div class="stime">11:05 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Free afternoon (if no tournament)</div><div class="sbs">Recharge. Be a 15-year-old sometimes.</div></div></div>
+</div>
+
+<div id="day-sun" class="day-panel">
+  <div class="snote">Sunday — Recovery + planning day. Lighter academic load. OLI, content planning, and prep for Monday's Dr. Janies meeting.</div>
+  <div class="ssh">Morning</div>
+  <div class="sblock"><div class="stime">5:00 AM</div><div class="spill c-ap"></div><div class="sbl"><div class="sbt">AP Statistics — full unit</div><div class="sbs">75 min. Sunday is your Stats deep dive. Work through a full topic unit.</div></div></div>
+  <div class="sblock"><div class="stime">6:15 AM</div><div class="spill c-sat"></div><div class="sbl"><div class="sbt">ACT Prep — Reading section</div><div class="sbs">30 min. Reading comprehension. Strict timing.</div></div></div>
+  <div class="sblock"><div class="stime">6:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Spanish — immersion session</div><div class="sbs">30 min. Show or podcast entirely in Spanish. No subtitles.</div></div></div>
+  <div class="sblock"><div class="stime">7:15 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Korean — full lesson + speaking</div><div class="sbs">30 min. TTMIK lesson + speak out loud in Korean for 10 min.</div></div></div>
+  <div class="sblock"><div class="stime">7:45 AM</div><div class="spill c-lang"></div><div class="sbl"><div class="sbt">Japanese — full lesson + writing</div><div class="sbs">30 min. LingoDeer lesson + hiragana/katakana practice.</div></div></div>
+  <div class="sblock"><div class="stime">8:15 AM</div><div class="spill c-meeting"></div><div class="sbl"><div class="sbt">Prep for Monday's Dr. Janies meeting</div><div class="sbs">30 min. Review last meeting notes. Prepare one smart question for tomorrow.</div></div></div>
+  <div class="ssh">Mid-morning</div>
+  <div class="sblock"><div class="stime">8:45 AM</div><div class="spill c-oli"></div><div class="sbl"><div class="sbt">OLI — Weekly planning + content strategy</div><div class="sbs">60 min. Plan the week's kit drive. Update team. Review partnership responses.</div></div></div>
+  <div class="sblock"><div class="stime">9:45 AM</div><div class="spill c-content"></div><div class="sbl"><div class="sbt">@FakeDoctor — Content calendar planning</div><div class="sbs">45 min. Plan the whole week's content. Research topics. Write scripts in advance.</div></div></div>
+  <div class="sblock"><div class="stime">10:30 AM</div><div class="spill c-cert"></div><div class="sbl"><div class="sbt">Stop the Bleed + Mental Health First Aid — online modules</div><div class="sbs">45 min. Work through online portions. Book in-person sessions.</div></div></div>
+  <div class="sblock"><div class="stime">11:15 AM</div><div class="spill c-proj"></div><div class="sbl"><div class="sbt">Week planning session with Claude</div><div class="sbs">30 min. Review what got done. Build next week's to-do list. Update EC tracker.</div></div></div>
+  <div class="sblock"><div class="stime">11:45 AM</div><div class="spill c-free"></div><div class="sbl"><div class="sbt">Rest of Sunday — free</div><div class="sbs">Recharge fully. Big week starts tomorrow at 4:30AM.</div></div></div>
+</div>
+
+</div>
+</div>
+
+<script>
+function showDay(day, btn) {
+  document.querySelectorAll('.dt').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('day-' + day).classList.add('active');
+}
+</script>
 
 <script>
   const SECTION_MAP = {
