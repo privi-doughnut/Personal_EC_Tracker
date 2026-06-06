@@ -146,6 +146,7 @@
   <button class="tab" onclick="switchTab('add',this)">➕ Add EC</button>
   <button class="tab" onclick="switchTab('schedule',this)">🗓 Schedule</button>
   <button class="tab" onclick="switchTab('todo',this)">✅ To-Do</button>
+  <button class="tab" onclick="switchTab('reminders',this)">🔔 Reminders</button>
 </div>
 
 <!-- TRACKER TAB -->
@@ -569,212 +570,37 @@
 <!-- TODO TAB -->
 <div id="tab-todo" class="tab-panel">
 <div style="max-width:900px;margin:32px auto 0;padding:0 40px">
-
-<style>
-.todo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.todo-header h2{font-family:var(--font-serif);font-size:22px;font-weight:500}
-.todo-actions{display:flex;gap:8px}
-.todo-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all 0.2s}
-.todo-btn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary)}
-.todo-btn.primary{background:#1a5c38;border-color:#1a5c38;color:#f0fdf4}
-.todo-btn.primary:hover{opacity:0.85}
-.todo-btn.danger{color:#ef4444;border-color:#ef444440}
-.todo-btn.danger:hover{background:#ef444410}
-.paste-area{width:100%;min-height:180px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:16px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);resize:vertical;outline:none;line-height:1.6;transition:border-color 0.2s}
-.paste-area:focus{border-color:#1a5c38}
-.paste-area::placeholder{color:var(--color-text-secondary)}
-.list-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 24px;margin-bottom:16px}
-.list-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--color-border-tertiary)}
-.list-card-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
-.list-card-meta{font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono)}
-.todo-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:opacity 0.15s}
-.todo-item:last-child{border-bottom:none}
-.todo-item:hover{opacity:0.8}
-.todo-item.done .todo-text{text-decoration:line-through;color:var(--color-text-secondary)}
-.todo-item.done .todo-cb{color:#1a5c38}
-.todo-cb{font-size:15px;flex-shrink:0;margin-top:1px;color:var(--color-text-secondary);user-select:none}
-.todo-text{font-size:13px;color:var(--color-text-primary);line-height:1.5;flex:1}
-.todo-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;font-family:var(--font-mono)}
-.progress-bar{height:4px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:16px;overflow:hidden}
-.progress-fill{height:100%;background:#1a5c38;border-radius:2px;transition:width 0.3s}
-.empty-todo{text-align:center;padding:48px;color:var(--color-text-secondary);font-size:13px}
-.list-stats{font-size:11px;color:#1a5c38;font-family:var(--font-mono)}
-.section-label{font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:12px 0 6px;padding-bottom:4px;border-bottom:0.5px solid var(--color-border-tertiary)}
-.input-row{display:flex;gap:8px;margin-bottom:12px}
-.list-name-input{flex:1;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 14px;font-family:var(--font-sans);font-size:13px;color:var(--color-text-primary);outline:none}
-.list-name-input:focus{border-color:#1a5c38}
-</style>
-
-<div class="todo-header">
-  <h2>To-Do Lists</h2>
-  <div class="todo-actions">
-    <button class="todo-btn danger" onclick="clearAllTodos()">Clear all</button>
-  </div>
+<h2 style="font-size:18px;font-weight:500;margin-bottom:8px">To-Do List</h2>
+<p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:16px">Paste any to-do list here. Saves automatically.</p>
+<textarea id="todo-notes" oninput="saveTodoNotes()" style="width:100%;min-height:60vh;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:12px;padding:20px;font-family:var(--font-mono);font-size:13px;color:var(--color-text-primary);resize:vertical;outline:none;line-height:1.8;" placeholder="Paste your to-do list here..."></textarea>
+</div>
 </div>
 
-<div class="list-card" style="margin-bottom:24px">
-  <div class="list-card-header" style="border:none;margin:0;padding:0 0 12px">
-    <div class="list-card-title">Paste a new to-do list</div>
-  </div>
-  <div class="input-row">
-    <input type="text" class="list-name-input" id="todo-list-name" placeholder="List name (e.g. June 3-9 Sprint)">
-  </div>
-  <textarea class="paste-area" id="todo-paste" placeholder="Paste your to-do list here. Each line becomes a task.&#10;&#10;Lines starting with [ ] become checkboxes.&#10;Lines starting with # become section headers.&#10;Lines starting with → or - become sub-notes.&#10;Everything else becomes a regular task.&#10;&#10;Example:&#10;# This week&#10;[ ] Register for Congressional Award ($25)&#10;    → congressionalaward.org&#10;[ ] Apply to Novant Health volunteer program"></textarea>
-  <div style="display:flex;gap:8px;margin-top:10px">
-    <button class="todo-btn primary" onclick="parsePastedList()">➕ Add list</button>
-    <button class="todo-btn" onclick="document.getElementById('todo-paste').value='';document.getElementById('todo-list-name').value=''">Clear</button>
-  </div>
-</div>
-
-<div id="todo-lists-container">
-  <div class="empty-todo" id="todo-empty">No to-do lists yet. Paste one above to get started.</div>
-</div>
-
+<!-- REMINDERS TAB -->
+<div id="tab-reminders" class="tab-panel">
+<div style="max-width:900px;margin:32px auto 0;padding:0 40px">
+<h2 style="font-size:18px;font-weight:500;margin-bottom:8px">Reminders</h2>
+<p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:16px">Paste reminders here. Saves automatically.</p>
+<textarea id="reminder-notes" oninput="saveReminderNotes()" style="width:100%;min-height:60vh;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:12px;padding:20px;font-family:var(--font-mono);font-size:13px;color:var(--color-text-primary);resize:vertical;outline:none;line-height:1.8;" placeholder="Paste reminders here..."></textarea>
 </div>
 </div>
 
 <script>
-function showDay(day, btn) {
-  document.querySelectorAll('.dt').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('day-' + day).classList.add('active');
+function saveTodoNotes() {
+  try { localStorage.setItem('todo_notes', document.getElementById('todo-notes').value); } catch(e) {}
 }
-</script>
-
-<script>
-let todoLists = [];
-
-function parsePastedList() {
-  const raw = document.getElementById('todo-paste').value.trim();
-  const name = document.getElementById('todo-list-name').value.trim() || 'To-Do List ' + (todoLists.length + 1);
-  if (!raw) { alert('Paste a list first.'); return; }
-
-  const lines = raw.split('\n');
-  const items = [];
-  let currentSection = null;
-
-  lines.forEach(line => {
-    const trimmed = line.trim();
-    if (!trimmed) return;
-
-    if (trimmed.startsWith('#')) {
-      currentSection = trimmed.replace(/^#+\s*/, '');
-      items.push({ type: 'section', text: currentSection });
-    } else if (trimmed.match(/^\[[ x]\]/i)) {
-      const done = trimmed.match(/^\[x\]/i) ? true : false;
-      const text = trimmed.replace(/^\[[ x]\]\s*/i, '');
-      items.push({ type: 'task', text, done, id: Date.now() + Math.random(), section: currentSection });
-    } else if (trimmed.startsWith('→') || trimmed.startsWith('-') || trimmed.startsWith('*')) {
-      const text = trimmed.replace(/^[→\-\*]\s*/, '');
-      if (items.length > 0 && items[items.length-1].type === 'task') {
-        items[items.length-1].sub = (items[items.length-1].sub || '') + text + ' ';
-      } else {
-        items.push({ type: 'task', text, done: false, id: Date.now() + Math.random() });
-      }
-    } else {
-      items.push({ type: 'task', text: trimmed, done: false, id: Date.now() + Math.random(), section: currentSection });
-    }
-  });
-
-  const list = { id: Date.now(), name, items, created: new Date().toLocaleDateString() };
-  todoLists.push(list);
-  saveTodos();
-  renderTodos();
-
-  document.getElementById('todo-paste').value = '';
-  document.getElementById('todo-list-name').value = '';
+function saveReminderNotes() {
+  try { localStorage.setItem('reminder_notes', document.getElementById('reminder-notes').value); } catch(e) {}
 }
-
-function toggleTodoItem(listId, itemId) {
-  const list = todoLists.find(l => l.id === listId);
-  if (!list) return;
-  const item = list.items.find(i => i.id === itemId);
-  if (!item) return;
-  item.done = !item.done;
-  saveTodos();
-  renderTodos();
-}
-
-function deleteList(listId) {
-  if (!confirm('Delete this list?')) return;
-  todoLists = todoLists.filter(l => l.id !== listId);
-  saveTodos();
-  renderTodos();
-}
-
-function clearAllTodos() {
-  if (!confirm('Clear all to-do lists? This cannot be undone.')) return;
-  todoLists = [];
-  saveTodos();
-  renderTodos();
-}
-
-function renderTodos() {
-  const container = document.getElementById('todo-lists-container');
-  const empty = document.getElementById('todo-empty');
-  const existing = container.querySelectorAll('.list-card');
-  existing.forEach(e => e.remove());
-
-  if (todoLists.length === 0) {
-    if (empty) empty.style.display = 'block';
-    return;
-  }
-  if (empty) empty.style.display = 'none';
-
-  todoLists.forEach(list => {
-    const tasks = list.items.filter(i => i.type === 'task');
-    const done = tasks.filter(i => i.done).length;
-    const total = tasks.length;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-    const card = document.createElement('div');
-    card.className = 'list-card';
-
-    let itemsHtml = '';
-    list.items.forEach(item => {
-      if (item.type === 'section') {
-        itemsHtml += `<div class="section-label">${item.text}</div>`;
-      } else {
-        itemsHtml += `
-          <div class="todo-item${item.done ? ' done' : ''}" onclick="toggleTodoItem(${list.id}, ${item.id})">
-            <span class="todo-cb">${item.done ? '✅' : '⬜'}</span>
-            <div>
-              <div class="todo-text">${item.text}</div>
-              ${item.sub ? `<div class="todo-sub">→ ${item.sub.trim()}</div>` : ''}
-            </div>
-          </div>`;
-      }
-    });
-
-    card.innerHTML = `
-      <div class="list-card-header">
-        <div>
-          <div class="list-card-title">${list.name}</div>
-          <div class="list-card-meta">${list.created} · <span class="list-stats">${done}/${total} done · ${pct}%</span></div>
-        </div>
-        <button class="todo-btn danger" onclick="deleteList(${list.id})" style="font-size:10px;padding:4px 10px">Delete</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      ${itemsHtml}
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-function saveTodos() {
-  try { localStorage.setItem('todo_lists', JSON.stringify(todoLists)); } catch(e) {}
-}
-
-function loadTodos() {
+function loadNotes() {
   try {
-    todoLists = JSON.parse(localStorage.getItem('todo_lists') || '[]');
-    renderTodos();
-  } catch(e) { todoLists = []; }
+    const t = localStorage.getItem('todo_notes');
+    const r = localStorage.getItem('reminder_notes');
+    if (t) document.getElementById('todo-notes').value = t;
+    if (r) document.getElementById('reminder-notes').value = r;
+  } catch(e) {}
 }
-
-loadTodos();
+loadNotes();
 </script>
 
 <script>
